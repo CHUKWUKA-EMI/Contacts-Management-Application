@@ -37,13 +37,20 @@ const StaffList = () => {
     return (
       <React.Fragment>
         {error && (
-          <div className="alert alert-danger" role="alert">
+          <div
+            style={{ marginTop: "10%" }}
+            className="alert alert-danger"
+            role="alert"
+          >
             {error}
           </div>
         )}
 
         {!isLoading && (
-          <table className="table table-hover table-bordered table-dark mr-5 mt-5">
+          <table
+            style={{ marginTop: "20%" }}
+            className="table table-hover table-bordered table-dark mr-5"
+          >
             <thead>
               <tr>
                 <th scope="col">S/N</th>

@@ -9,12 +9,14 @@ const Home = () => {
   const [error, setError] = React.useState("");
   const [info, setInfo] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [disable, setDisable] = React.useState(false);
 
   const { REACT_APP_API_URL } = process.env;
   const context = React.useContext(CustomersContext);
 
   const handleSearch = async () => {
     setIsLoading(true);
+
     const requestBody = {
       query: query,
     };
@@ -37,21 +39,34 @@ const Home = () => {
         `You have a total of ${result.customer.count} customers that match your search`
       );
     } catch (err) {
-      setError(err.message);
+      setError(`Your search returned no result`);
     }
   };
+  React.useEffect(() => {
+    if (!context.token) {
+      setDisable(true);
+    }
+  }, [disable]);
 
   let spinner = <Spinner />;
   if (!isLoading) {
     return (
       <React.Fragment>
         {info && (
-          <div className="alert alert-info" role="alert">
+          <div
+            style={{ marginTop: "10%" }}
+            className="alert alert-info"
+            role="alert"
+          >
             {info}
           </div>
         )}
         {error && (
-          <div className="alert alert-danger" role="alert">
+          <div
+            style={{ marginTop: "10%" }}
+            className="alert alert-danger"
+            role="alert"
+          >
             {error}
           </div>
         )}
@@ -71,6 +86,11 @@ const Home = () => {
               You can also search for a customer by entering a key word
               associted with him/her in the search box below...
             </p>
+            {!context.token && (
+              <p style={{ color: "red" }}>
+                Please sign in to activate the search box
+              </p>
+            )}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -83,13 +103,18 @@ const Home = () => {
                 className="form-control md-col-10  mr-md-2"
                 type="text"
                 name="query"
+                disabled={disable}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Enter a key word ..."
                 aria-label="Search"
               />
 
-              <button className="btn btn-success my-2 my-sm-0" type="submit">
+              <button
+                disabled={disable}
+                className="btn btn-success my-2 my-sm-0"
+                type="submit"
+              >
                 Search
               </button>
             </form>

@@ -60,7 +60,7 @@ function App() {
           >
             <Switch>
               <Route exact path="/" component={Home} />
-              {token && <Redirect from="/signin" to="/" />}
+
               <Redirect from="/signout" to="/" />
               {token && <Route path="/customers" component={Customers} />}
               {token && <Route path="/add-customer" component={AddCustomer} />}

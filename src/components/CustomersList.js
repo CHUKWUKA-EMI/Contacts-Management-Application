@@ -2,6 +2,9 @@ import React from "react";
 import EditCustomer from "./editCustomer";
 import Spinner from "./Spinner";
 import CustomerContext from "../Context/Context";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const CustomersList = (props) => {
   const [customers, setCustomers] = React.useState([]);
@@ -10,8 +13,6 @@ const CustomersList = (props) => {
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const { REACT_APP_API_URL } = process.env;
 
   const context = React.useContext(CustomerContext);
 
@@ -25,10 +26,12 @@ const CustomersList = (props) => {
   const [state, setState] = React.useState(customer.state);
   const [local_govt, setLocal_Govt] = React.useState(customer.local_govt);
 
+  const { REACT_APP_API_URL } = process.env;
   const getCustomers = React.useCallback(async () => {
     setIsLoading(true);
+
     try {
-      const data = await fetch(REACT_APP_API_URL, +"customers", {
+      const data = await fetch(REACT_APP_API_URL + "customers", {
         method: "GET",
         headers: {
           "content-Type": "application/json",
@@ -69,7 +72,7 @@ const CustomersList = (props) => {
       local_govt: local_govt,
     };
     try {
-      const data = await fetch(REACT_APP_API_URL, +`customer/${customer.id}`, {
+      const data = await fetch(REACT_APP_API_URL + `customer/${customer.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +97,7 @@ const CustomersList = (props) => {
 
   const handleDelete = async (customerId) => {
     try {
-      await fetch(REACT_APP_API_URL, +`customer/${customerId}`, {
+      await fetch(REACT_APP_API_URL + `customer/${customerId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -113,13 +116,21 @@ const CustomersList = (props) => {
   if (!isLoading) {
     return (
       <React.Fragment>
-        {success && (
-          <div className="alert alert-success" role="alert">
+        {success && !isEdit && (
+          <div
+            style={{ marginTop: "10%" }}
+            className="alert alert-success "
+            role="alert"
+          >
             {success}
           </div>
         )}
-        {error && (
-          <div className="alert alert-danger" role="alert">
+        {error && !isEdit && (
+          <div
+            style={{ marginTop: "10%" }}
+            className="alert alert-danger"
+            role="alert"
+          >
             {error}
           </div>
         )}
@@ -150,7 +161,10 @@ const CustomersList = (props) => {
         )}
 
         {!isEdit && !isLoading && (
-          <table className="table table-hover table-bordered table-dark mr-5">
+          <table
+            style={{ marginTop: "10%", marginRight: "30%" }}
+            className="table table-hover table-bordered table-dark mr-5"
+          >
             <thead>
               <tr>
                 <th scope="col">Name</th>

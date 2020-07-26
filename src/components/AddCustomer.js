@@ -51,18 +51,27 @@ const AddCustomer = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-md-5">
       {success && (
-        <div className="alert alert-success" role="alert">
+        <div
+          style={{ marginTop: "10%" }}
+          className="alert alert-success "
+          role="alert"
+        >
           {success}
         </div>
       )}
       {error && (
-        <div className="alert alert-danger" role="alert">
+        <div
+          style={{ marginTop: "10%" }}
+          className="alert alert-danger "
+          role="alert"
+        >
           {error}
         </div>
       )}
       <form
+        style={{ marginTop: "16%" }}
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();

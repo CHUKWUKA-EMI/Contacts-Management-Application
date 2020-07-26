@@ -9,10 +9,12 @@ const Login = () => {
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
   const [success, setSuccess] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const context = React.useContext(CustomerContext);
 
   const handleSignin = async () => {
+    setIsLoading(true);
     const requestBody = {
       email: email,
       password: password,
@@ -31,6 +33,7 @@ const Login = () => {
         body: JSON.stringify(requestBody),
       });
       const result = await loginData.json();
+      setIsLoading(false);
       setSuccess("You have successfully Logged in.");
       context.login(
         result.id,
@@ -55,6 +58,9 @@ const Login = () => {
           {error}
         </div>
       )}
+      <center>
+        <h3>{isLoading ? "Authenticating..." : ""}</h3>
+      </center>
       <form
         style={{ marginLeft: "25%" }}
         className="form-signin mt-5"
@@ -91,7 +97,7 @@ const Login = () => {
         </div>
 
         <button className="btn btn-lg btn-secondary col-md-8" type="submit">
-          Sign in
+          {isLoading ? "Authenticating..." : "Sign in"}
         </button>
       </form>
     </React.Fragment>

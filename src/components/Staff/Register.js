@@ -14,6 +14,7 @@ const Register = () => {
   const [success, setSuccess] = React.useState("");
   const [done, setDone] = React.useState(false);
   const [passError, setPassError] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const passwordCheck = (event) => {
     if (typeof password !== undefined && typeof confirmPassword !== undefined) {
@@ -28,6 +29,7 @@ const Register = () => {
   };
 
   const handleSignUp = async () => {
+    setIsLoading(true);
     const requestBody = {
       firstName: firstName,
       lastName: lastName,
@@ -57,7 +59,7 @@ const Register = () => {
       setSuccess(
         "You have successfully registered. A confirmation message has been sent to your email for verification."
       );
-      console.log(result);
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
     }
@@ -75,7 +77,9 @@ const Register = () => {
           {error}
         </div>
       )}
-
+      <center>
+        <h3>{isLoading ? "Connecting..." : ""}</h3>
+      </center>
       <form
         style={{ marginLeft: "25%" }}
         className="form-signup mt-3"
@@ -202,7 +206,7 @@ const Register = () => {
         </div>
 
         <button className="btn btn-lg btn-secondary col-md-8" type="submit">
-          Sign up
+          {isLoading ? "Connecting..." : "Sign up"}
         </button>
       </form>
     </React.Fragment>
