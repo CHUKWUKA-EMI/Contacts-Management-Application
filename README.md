@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This Application was built to provide help organization managers and business owners in the management of their customers' contact detils
 
 ## Available Scripts
 
