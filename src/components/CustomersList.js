@@ -28,7 +28,7 @@ const CustomersList = (props) => {
   const getCustomers = React.useCallback(async () => {
     setIsLoading(true);
     try {
-      const data = await fetch(REACT_APP_API_URL + "customers", {
+      const data = await fetch(REACT_APP_API_URL, RE + "customers", {
         method: "GET",
         headers: {
           "content-Type": "application/json",
@@ -46,7 +46,7 @@ const CustomersList = (props) => {
     } catch (err) {
       setError(err);
     }
-  }, [context]);
+  }, [context, REACT_APP_API_URL]);
 
   React.useEffect(() => {
     getCustomers();
@@ -69,14 +69,18 @@ const CustomersList = (props) => {
       local_govt: local_govt,
     };
     try {
-      const data = await fetch(REACT_APP_API_URL + `customer/${customer.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: context.token,
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const data = await fetch(
+        REACT_APP_API_URL,
+        RE + `customer/${customer.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: context.token,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
       await data.json();
       const updatedCustomerList = customers.map((person) => {
         if (person.id === customer.id) {
@@ -94,7 +98,7 @@ const CustomersList = (props) => {
 
   const handleDelete = async (customerId) => {
     try {
-      await fetch(REACT_APP_API_URL + `customer/${customerId}`, {
+      await fetch(REACT_APP_API_URL, RE + `customer/${customerId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

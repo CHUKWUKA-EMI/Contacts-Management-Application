@@ -26,7 +26,7 @@ const StaffList = () => {
     } catch (err) {
       setError(err.message);
     }
-  }, [context]);
+  }, [context, REACT_APP_API_URL]);
 
   React.useEffect(() => {
     getStaff();
