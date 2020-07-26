@@ -46,7 +46,7 @@ const Home = () => {
     if (!context.token) {
       setDisable(true);
     }
-  }, [disable]);
+  }, [context.token]);
 
   let spinner = <Spinner />;
   if (!isLoading) {

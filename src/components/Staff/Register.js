@@ -55,7 +55,7 @@ const Register = () => {
         },
         body: JSON.stringify(requestBody),
       });
-      const result = await data.json();
+      await data.json();
       setSuccess(
         "You have successfully registered. A confirmation message has been sent to your email for verification."
       );
